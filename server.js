@@ -8,14 +8,15 @@ var mongoose = require('mongoose');
 var mongoURI = process.env.MONGOLAB_URI;
 var cors = require('cors');
 
-//require('dotenv').config();
-
 mongoose.connect(process.env.MONGOLAB_URI);
 
 require('./routes/email-route')(apiRouter);
 require('./routes/addHomes-route')(apiRouter);
 
-app.use(cors());
+var corsOptions = {
+  origin: 'https://overbrook-construction.herokuapp.com'
+};
+app.use(cors(corsOptions));
 
 //app.use((req, res, next) => {
 //  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
