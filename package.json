@@ -38,6 +38,7 @@
     "bcrypt": "^0.8.6",
     "body-parser": "^1.15.1",
     "connect-multiparty": "^2.0.0",
+    "cors": "^2.7.1",
     "css-loader": "^0.23.1",
     "dotenv": "^2.0.0",
     "dropzone": "^4.3.0",
