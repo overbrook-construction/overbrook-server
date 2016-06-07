@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv');
+//require('dotenv');
 var multer = require('multer');
 var AWS = require('aws-sdk');
 var User = require(__dirname + '/../models/user');

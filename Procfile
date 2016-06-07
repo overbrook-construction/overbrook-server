@@ -1,1 +1,1 @@
-web: node realserver.js
+web: node server.js
