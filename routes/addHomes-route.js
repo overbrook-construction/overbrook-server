@@ -53,7 +53,7 @@ module.exports = (apiRouter) => {
       res.json(house);
     })
   })
-  .get(jwtAuth, (req, res) => {
+  .get((req, res) => {
     House.find({}, (err, houses) => {
       if (err) throw err;
       res.json(houses);
