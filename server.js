@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var debug = require('debug')('overbrook:server');
 var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
 debug('mongoURI ' + mongoURI); 
-var origin = 'http://localhost:8080' || process.env.ORIGIN;
+var origin =   process.env.ORIGIN || 'http://localhost:8080';
 
 var cors = require('cors');
 
