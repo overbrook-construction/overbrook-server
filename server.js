@@ -1,21 +1,25 @@
-
 var express = require('express');
 var app = express();
 var apiRouter = express.Router();
 var adminRouter = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var mongoURI = process.env.MONGOLAB_URI;
+var debug = require('debug')('overbrook:server');
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
+debug('mongoURI ' + mongoURI); 
+var origin = 'http://localhost:8080' || process.env.ORIGIN;
+
 var cors = require('cors');
 
-mongoose.connect(process.env.MONGOLAB_URI);
+mongoose.connect(mongoURI);
 
 require('./routes/email-route')(apiRouter);
 require('./routes/addHomes-route')(apiRouter);
 
 var corsOptions = {
-  origin: 'https://overbrook-construction.herokuapp.com'
+  origin: origin
 };
+
 app.use(cors(corsOptions));
 
 //app.use((req, res, next) => {
