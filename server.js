@@ -5,9 +5,12 @@ var adminRouter = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var debug = require('debug')('overbrook:server');
-var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
-debug('mongoURI ' + mongoURI); 
+// var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
+var mongoURI = 'mongodb://overbrook:overbrook425@ds011903.mlab.com:11903/overbrook-construction';
+debug('mongoURI ' + mongoURI);
 var origin =   process.env.ORIGIN || 'http://localhost:8080';
+
+// var origin = 'https://overbrook-client.herokuapp.com'
 
 var cors = require('cors');
 
