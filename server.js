@@ -9,8 +9,12 @@ var debug = require('debug')('overbrook:server');
 var multer = require('multer');
 // var upload = multer({dest: './uploads'});
 
-// var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
-var mongoURI = 'mongodb://overbrook:overbrook425@ds011903.mlab.com:11903/overbrook-construction';
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
+
+// SWITCH DURING STAGING ^ V
+
+// var mongoURI = 'mongodb://overbrook:overbrook425@ds011903.mlab.com:11903/overbrook-construction';
+
 debug('mongoURI ' + mongoURI);
 var origin =   process.env.ORIGIN || 'http://localhost:8080';
 
