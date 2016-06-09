@@ -10,9 +10,7 @@ var userSchema = mongoose.Schema({
 })
 
 userSchema.pre('save', function(next) {
-  console.log('PRESAVE MIDDLEWARE HAS BEEN HIT')
   this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10))
-  console.log('hash password NEWWWW : ', this.password);
   next()
 })
 
@@ -21,7 +19,6 @@ userSchema.methods.generateToken = function() {
 }
 
 userSchema.methods.compareHash = function(pass, hash) {
-  console.log('COMPARY HASH PASS WORD HIT WITH : PASSWORD ', pass + ' HASH : ',  hash);
   return bcrypt.compareSync(pass, hash)
 }
 

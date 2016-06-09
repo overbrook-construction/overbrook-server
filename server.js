@@ -5,9 +5,16 @@ var adminRouter = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var debug = require('debug')('overbrook:server');
-var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
-debug('mongoURI ' + mongoURI); 
+
+var multer = require('multer');
+// var upload = multer({dest: './uploads'});
+
+// var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
+var mongoURI = 'mongodb://overbrook:overbrook425@ds011903.mlab.com:11903/overbrook-construction';
+debug('mongoURI ' + mongoURI);
 var origin =   process.env.ORIGIN || 'http://localhost:8080';
+
+// var origin = 'https://overbrook-client.herokuapp.com'
 
 var cors = require('cors');
 
@@ -21,15 +28,12 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-//app.use((req, res, next) => {
-//  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-//  res.header('Access-Control-Allow-Headers', 'Content-Type, token, authorization');
-//  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//  next();
-//});
-
 app.use(bodyParser.json());
+
+app.use(multer({
+  dest: './uploads'
+}).any());
+
 app.use('/', apiRouter);
 
 
