@@ -31,6 +31,22 @@ module.exports = (apiRouter) => {
   })
 })
 
+
+
+// ADD PICTURE ROUTE !!!!!!
+  apiRouter.route('/picUpload')
+  .post((req, res) => {
+    console.log('REQUEST FILE : ', req.file);
+
+    /*
+    Build out functionality to read the file from the upload folder,
+    Remane the files acoordingly,
+    send the files to S3 and use a promise to make sure the urls come back as planned.
+    */
+
+  })
+
+
   // apiRouter.route('/addUser')
   // .post((req, res) => {
   //   var newUser = new User()
