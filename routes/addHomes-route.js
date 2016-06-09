@@ -78,6 +78,7 @@ module.exports = (apiRouter) => {
 
   apiRouter.route('/addHomes/:id')
   .put(jwtAuth, (req, res) => {
+    console.log('UPDATING HOUSE LOT SIZE : ', req.body);
     House.findByIdAndUpdate({_id: req.params.id}, req.body, (err, person) => {
       if (err) throw err;
       res.json(req.body);
