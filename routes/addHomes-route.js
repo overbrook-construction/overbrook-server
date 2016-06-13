@@ -7,13 +7,10 @@ var User = require(__dirname + '/../models/user');
 var basicHTTP = require(__dirname + '/../lib/basic_http')
 var jwtAuth = require(__dirname + '/../lib/jwt_auth');
 var House = require(__dirname + '/../models/house-models');
+var del = require('del');
 
-var fs = require('fs'),
-    S3FS = require('s3fs'),
-    s3fsImpl = new S3FS('overbrook-images', {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKe: process.env.AWS_SECRET_ACCESS_KEY
-    })
+var fs = require('fs');
+
 
 module.exports = (apiRouter) => {
   apiRouter.route('/userLogin')
@@ -31,19 +28,68 @@ module.exports = (apiRouter) => {
   })
 })
 
-
+var uploaded = __dirname + '/../uploads'
 
 // ADD PICTURE ROUTE !!!!!!
   apiRouter.route('/picUpload')
   .post((req, res) => {
-    console.log('REQUEST FILE : ', req.file);
+    var houseId = req.body.name
+    var housePrefix = req.body.housePrefix
 
-    /*
-    Build out functionality to read the file from the upload folder,
-    Remane the files acoordingly,
-    send the files to S3 and use a promise to make sure the urls come back as planned.
-    */
+      fs.readdir(uploaded, (err, files) => {
+        if (err) throw err;
+        var dir = './uploads/';
+        var newHome = 'newHome';
+        var count = 0;
+        files.map((file) => {
+          count ++;
+          var newName = housePrefix + '-' + count.toString() + '.jpg';
+          fs.renameSync('./uploads/' + file, dir + newName);
+            var path = './uploads/' + newName;
+            var bodyStream = fs.createReadStream(path);
 
+            var s3 = new AWS.S3();
+            var params = {
+              Bucket: 'overbrook-images',
+              Key: newName,
+              ACL: 'public-read-write',
+              Body: bodyStream,
+              ContentEncoding: 'base64',
+              ContentLength: bodyStream.length
+            }
+
+            s3.putObject(params, function(err, data) {
+              if (err) console.log(err, err.stack);
+              res.end();
+            });
+            var urlParams = {
+              Bucket: 'overbrook-images',
+              Key: newName
+            };
+            var saveUrl;
+            s3.getSignedUrl('putObject', urlParams, (err, url) => {
+              var tempUrl = url;
+              var splitAt;
+              function getUrl(url) {
+                for (var i = 0; i < url.length; i++) {
+                  if (url[i] == '?') {
+                    saveUrl = url.substring(0, i);
+                  }
+                }
+                console.log('save url is : ', saveUrl);
+                return saveUrl
+              }
+              getUrl(url)
+            })
+            House.findByIdAndUpdate({_id: houseId}, {$push: {pics: saveUrl}}, (err, house) => {
+              if (err) throw err;
+            })
+        })
+        del(['./uploads/*', '!uploads/']).then(paths => {
+	         console.log('Deleted files and folders:\n', paths.join('\n'));
+         });
+      })
+      res.end();
   })
 
 

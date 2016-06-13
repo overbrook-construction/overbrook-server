@@ -7,13 +7,30 @@ var mongoose = require('mongoose');
 var debug = require('debug')('overbrook:server');
 
 var multer = require('multer');
+
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    console.log('FILE FROM FILE NAME : ', file.originalname);
+    cb(null, file.originalname)
+  }
+})
+
+
+
+
+
+
 // var upload = multer({dest: './uploads'});
 
-var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
+// PRODUCTION _________________
+// var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
 
-// SWITCH DURING STAGING ^ V
-
-// var mongoURI = 'mongodb://overbrook:overbrook425@ds011903.mlab.com:11903/overbrook-construction';
+// STAGING ____________________
+var mongoURI = 'mongodb://overbrook:overbrook425@ds011903.mlab.com:11903/overbrook-construction';
 
 debug('mongoURI ' + mongoURI);
 var origin =   process.env.ORIGIN || 'http://localhost:8080';
@@ -35,8 +52,15 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 app.use(multer({
+  storage: storage
+}).any());
+
+/*
+//WORKING PRIOR TO STORAGE - MULTER
+app.use(multer({
   dest: './uploads'
 }).any());
+*/
 
 app.use('/', apiRouter);
 
