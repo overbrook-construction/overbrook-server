@@ -27,10 +27,10 @@ var storage = multer.diskStorage({
 // var upload = multer({dest: './uploads'});
 
 // PRODUCTION _________________
-// var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
 
 // STAGING ____________________
-var mongoURI = 'mongodb://overbrook:overbrook425@ds011903.mlab.com:11903/overbrook-construction';
+// var mongoURI = 'mongodb://overbrook:overbrook425@ds011903.mlab.com:11903/overbrook-construction';
 
 debug('mongoURI ' + mongoURI);
 var origin =   process.env.ORIGIN || 'http://localhost:8080';
