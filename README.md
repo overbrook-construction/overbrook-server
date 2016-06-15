@@ -1,5 +1,5 @@
 # overbrook-website
-http://www.overbrookconstructioninc.com/#/home
+http://www.overbrookconstructioninc.com
 
 Overbrook Construction INC. is a premiere home building company based out of Bellevue, WA. Until May 2016, the existing website was a static HTML/CSS multi-page site, that only had text regarding who the company was and what they did.
 
