@@ -1,6 +1,5 @@
 'use strict';
 
-//require('dotenv');
 var multer = require('multer');
 var AWS = require('aws-sdk');
 var User = require(__dirname + '/../models/user');
@@ -8,9 +7,7 @@ var basicHTTP = require(__dirname + '/../lib/basic_http')
 var jwtAuth = require(__dirname + '/../lib/jwt_auth');
 var House = require(__dirname + '/../models/house-models');
 var del = require('del');
-
 var fs = require('fs');
-
 
 module.exports = (apiRouter) => {
   apiRouter.route('/userLogin')
@@ -92,7 +89,7 @@ var uploaded = __dirname + '/../uploads'
       res.end();
   })
 
-
+// ROUTE FOR ADDITIONAL USERS IN LATER USE CASES
   // apiRouter.route('/addUser')
   // .post((req, res) => {
   //   var newUser = new User()
@@ -124,7 +121,6 @@ var uploaded = __dirname + '/../uploads'
 
   apiRouter.route('/addHomes/:id')
   .put(jwtAuth, (req, res) => {
-    console.log('UPDATING HOUSE LOT SIZE : ', req.body);
     House.findByIdAndUpdate({_id: req.params.id}, req.body, (err, person) => {
       if (err) throw err;
       res.json(req.body);
@@ -151,7 +147,6 @@ var uploaded = __dirname + '/../uploads'
       var s3 = new AWS.S3();
       var params = {
         Bucket: 'overbrook-images',
-        // Key: process.env.AWS_ACCESS_KEY_ID,
         Key: 'h2432/testObjec',
         ACL: 'public-read-write',
         Body: JSON.stringify(body)

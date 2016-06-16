@@ -5,9 +5,7 @@ var adminRouter = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var debug = require('debug')('overbrook:server');
-
 var multer = require('multer');
-
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -18,13 +16,6 @@ var storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-
-
-
-
-
-
-// var upload = multer({dest: './uploads'});
 
 // PRODUCTION _________________
 var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/dev';
@@ -55,16 +46,7 @@ app.use(multer({
   storage: storage
 }).any());
 
-/*
-//WORKING PRIOR TO STORAGE - MULTER
-app.use(multer({
-  dest: './uploads'
-}).any());
-*/
-
 app.use('/', apiRouter);
-
-
 
 app.listen(process.env.PORT || 3000, function() {
   console.log('Server started on port 3000');
